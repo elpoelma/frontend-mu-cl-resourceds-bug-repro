@@ -18,7 +18,7 @@ export default class ApplicationController extends Controller {
     const newItem: Agendaitem = this.store.createRecord<Agendaitem>(
       'agendaitem',
       {
-        title: `test${count}`,
+        title: `item ${count}`,
         previousItem: items.at(-1),
       },
     );
