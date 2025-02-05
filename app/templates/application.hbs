@@ -7,6 +7,7 @@
 <button {{on "click" this.deleteSecondToLast}} disabled={{this.swapDisabled}} type="button">delete second to last item</button> --}}
 <table>
   <thead>
+    <th>Position</th>
     <th>Title</th>
     <th>Uri</th>
     <th>PreviousItem title</th>
@@ -15,10 +16,12 @@
   <tbody>
     {{#each @model as |ap|}}
       <tr>
+        <td>{{ap.position}}</td>
         <td>{{ap.title}}</td>
         <td>{{ap.uri}}</td>
         <td>{{ap.previousItem.title}}</td>
-        <td><button {{on 'click' (fn this.deleteItem ap)}} type="button">remove item</button></td>
+        <td><button {{on 'click' (fn this.deleteItemWithBug ap)}} type="button">remove item (with bug)</button></td>
+        <td><button {{on 'click' (fn this.deleteItemWithoutBug ap)}} type="button">remove item (without bug)</button></td>
       </tr>
     {{/each}}
   </tbody>

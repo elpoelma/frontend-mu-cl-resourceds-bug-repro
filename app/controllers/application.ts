@@ -34,7 +34,7 @@ export default class ApplicationController extends Controller {
     await this.router.refresh();
   };
 
-  deleteItem = async (item: Agendaitem) => {
+  deleteItemWithBug = async (item: Agendaitem) => {
     const items = this.model;
     const index = items.indexOf(item);
     if (index === -1) {
@@ -47,6 +47,22 @@ export default class ApplicationController extends Controller {
       nextItem.set('previousItem', previousItem);
       await nextItem.save();
     }
+    await this.router.refresh();
+  };
+
+  deleteItemWithoutBug = async (item: Agendaitem) => {
+    const items = this.model;
+    const index = items.indexOf(item);
+    if (index === -1) {
+      throw new Error(`Could not find ${item.id} in list of items`);
+    }
+    const previousItem = await item.previousItem;
+    const nextItem = items.at(index + 1);
+    if (nextItem) {
+      nextItem.set('previousItem', previousItem);
+      await nextItem.save();
+    }
+    await item.destroyRecord();
     await this.router.refresh();
   };
 }
