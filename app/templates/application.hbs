@@ -1,7 +1,19 @@
 {{page-title "FrontendMuClResourcesBugRepro"}}
 
-{{outlet}}
-
-{{! The following component displays Ember's default welcome message. }}
-<WelcomePage />
-{{! Feel free to remove this! }}
+<button {{on "click" this.addNew}} type="button">add new item</button>
+<button {{on "click" this.clearAll}} type="button">clear all</button>
+<button {{on "click" this.swap}} disabled={{this.swapDisabled}} type="button">swap last 2 items</button>
+<button {{on "click" this.deleteSecondToLast}} disabled={{this.swapDisabled}} type="button">delete second to last item</button>
+<table>
+  <thead>
+    <th>Title</th><th>PreviousItem title</th>
+  </thead>
+  <tbody>
+    {{#each @model as |ap|}}
+      <tr>
+        <td>{{ap.title}}</td>
+        <td>{{ap.previousItem.title}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
