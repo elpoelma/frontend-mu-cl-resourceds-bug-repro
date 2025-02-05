@@ -5,6 +5,8 @@ export default class Agendaitem extends Model {
   declare [Type]: 'agendaitem';
 
   @attr()
+  declare uri?: string;
+  @attr()
   declare title?: string;
 
   @belongsTo<Agendaitem>('agendaitem', { inverse: null, async: true })
