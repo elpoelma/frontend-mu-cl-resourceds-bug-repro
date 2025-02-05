@@ -34,6 +34,10 @@ export default class ApplicationController extends Controller {
     await this.router.refresh();
   };
 
+  /**
+   * Method which removes an agendaitem (variant 1)
+   * This variant induces the bug. It first removes the agenda-item, and only then adjusts the linked-list relationships.
+   */
   deleteItemWithBug = async (item: Agendaitem) => {
     const items = this.model;
     const index = items.indexOf(item);
@@ -50,6 +54,10 @@ export default class ApplicationController extends Controller {
     await this.router.refresh();
   };
 
+  /**
+   * Method which removes an agendaitem (variant 2)
+   * This variant does not induce the bug. It first adjusts the linked-list relationships, and then removes the agenda-item.
+   */
   deleteItemWithoutBug = async (item: Agendaitem) => {
     const items = this.model;
     const index = items.indexOf(item);
