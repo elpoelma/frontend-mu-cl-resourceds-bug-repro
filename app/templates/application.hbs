@@ -1,10 +1,32 @@
 {{!-- @glint-nocheck --}}
 {{page-title "FrontendMuClResourcesBugRepro"}}
+<div>
+Basic reproduction of <a href="https://github.com/mu-semtech/mu-cl-resources/issues/38">mu-cl-resources#38</a>.
+<a href="https://github.com/mu-semtech/mu-cl-resources/issues/38">mu-cl-resources#38</a> describes a bug in which a "belongsTo" relationship is not correctly cleared/overwritten.
+This simple application/component manages a list of items.
+These items are ordered in two ways:
+<ul>
+  <li>They each have a position attribute</li>
+  <li>They each link to the previous item in the list</li>
+</ul>
+Links between items are stored using the "ext:aangebrachtNa" predicate in the triplestore, which translates to a "previousItem" relationship in the JSON:API.
+
+When an item is added, it's added to the end of the list and is assigned a new position attribute, and is linked to the previous item in the list.
+
+When an item is removed, the resources is destroyed and the links in the linked list are adjusted/corrected.
+
+This component contains two approaches to removing an item:
+<ul>
+  <li>Destroy the item, and only then fix/adjust the linked list relationships. This causes the bug. The "ext:aangebrachtNa" relation to the destroyed item is not removed.</li>
+  <li>Fix/adjust the linked list relationships, and only then destroy the item. This does not cause the bug</li>
+</ul>
+
+My theory is that incoming "belongsTo" relationships are not cleared when an item/resource is destroyed/removed.
+</div>
+<hr>
 
 <button {{on "click" this.addNew}} type="button">add new item</button>
 <button {{on "click" this.clearAll}} type="button">clear all</button>
-{{!-- <button {{on "click" this.swap}} disabled={{this.swapDisabled}} type="button">swap last 2 items</button>
-<button {{on "click" this.deleteSecondToLast}} disabled={{this.swapDisabled}} type="button">delete second to last item</button> --}}
 <table>
   <thead>
     <th>Position</th>
