@@ -6,6 +6,6 @@ import Agendaitem from 'frontend-mu-cl-resources-bug-repro/models/agendaitem';
 export default class ApplicationRoute extends Route {
   @service declare store: Store;
   async model() {
-    return this.store.query<Agendaitem>('agendaitem', { sort: 'title' });
+    return this.store.query<Agendaitem>('agendaitem', { sort: 'position' });
   }
 }

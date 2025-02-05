@@ -14,11 +14,13 @@ export default class ApplicationController extends Controller {
 
   addNew = async () => {
     const items = this.model;
-    const count = items.length;
+    const lastItem = items.at(-1);
+    const position = lastItem ? lastItem.position + 1 : 0;
     const newItem: Agendaitem = this.store.createRecord<Agendaitem>(
       'agendaitem',
       {
-        title: `item ${count}`,
+        title: `item ${position}`,
+        position,
         previousItem: items.at(-1),
       },
     );
